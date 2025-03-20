@@ -312,7 +312,7 @@ def niah_configs():
 
 if __name__ == "__main__":
     helmet_configs()
-    helmet_configs(input_lengths=["8k", "16k", "32k", "64k"], fname_postfix="_short")
+    helmet_configs(input_lengths=["4k", "8k", "16k", "32k", "64k"], fname_postfix="_short")
     niah_configs()
-    separate_configs()
-    separate_configs(input_lengths=["8k", "16k", "32k", "64k"], fname_postfix="_short")
+    # separate_configs()
+    # separate_configs(input_lengths=["4k","8k", "16k", "32k", "64k"], fname_postfix="_short")

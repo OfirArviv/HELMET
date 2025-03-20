@@ -1,8 +1,8 @@
-input_max_length: 8192,16384,32768,65536
-datasets: alce_asqa_nocite_30,alce_asqa_nocite_75,alce_asqa_nocite_165,alce_asqa_nocite_345
+input_max_length: 4096,8192,16384,32768,65536
+datasets: alce_asqa_nocite_8,alce_asqa_nocite_30,alce_asqa_nocite_75,alce_asqa_nocite_165,alce_asqa_nocite_345
 generation_max_length: 600
-test_files: data/alce/asqa_eval_gtr_top2000.json,data/alce/asqa_eval_gtr_top2000.json,data/alce/asqa_eval_gtr_top2000.json,data/alce/asqa_eval_gtr_top2000.json
-demo_files: prompts/asqa_nocite.json,prompts/asqa_nocite.json,prompts/asqa_nocite.json,prompts/asqa_nocite.json
+test_files: data/alce/asqa_eval_gtr_top2000.json,data/alce/asqa_eval_gtr_top2000.json,data/alce/asqa_eval_gtr_top2000.json,data/alce/asqa_eval_gtr_top2000.json,data/alce/asqa_eval_gtr_top2000.json
+demo_files: prompts/asqa_nocite.json,prompts/asqa_nocite.json,prompts/asqa_nocite.json,prompts/asqa_nocite.json,prompts/asqa_nocite.json
 use_chat_template: true
 max_test_samples: 100
 shots: 0
