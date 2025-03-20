@@ -5,6 +5,6 @@ test_files: data/kilt/nq-dev-multikilt_1000_k20_dep6.jsonl
 demo_files: data/kilt/nq-train-multikilt_1000_k3_dep6.jsonl
 use_chat_template: false
 max_test_samples: 4
-shots: 2
+shots: 0
 stop_new_line: true
 model_name_or_path: meta-llama/Llama-3.1-8B-Instruct
