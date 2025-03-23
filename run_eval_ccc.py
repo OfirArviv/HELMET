@@ -29,7 +29,7 @@ base_model_names = [
 
 
 configs = glob.glob("configs/*_short*.yaml")
-configs = configs[3]
+configs = configs[3:4]
 
 args_list = []
 for config in configs:
