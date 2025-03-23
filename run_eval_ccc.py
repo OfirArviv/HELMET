@@ -50,7 +50,7 @@ cluster_strategy = CCCClusterStrategy(
     mem="128g",
     gpu_type="a100_80gb",
     project_name="FM-Evaluation",
-    job_name="Bamna",
+    job_name="Bamba",
     num_gpus=1
 )
 
