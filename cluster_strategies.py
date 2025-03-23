@@ -245,15 +245,12 @@ class CCCClusterStrategy(ClusterStrategy):
         while not inpt.tasks_args_queue.empty():
             task_data = inpt.tasks_args_queue.get()
             args_strings = task_data.args.get_args_dict()
-            args_strings["api_key_n"] = str(inpt.job_id)
             arg_names_and_values = [
                 f"--{arg_name} {arg_str}" for arg_name, arg_str in args_strings.items()
             ]
             args_string = " ".join(arg_names_and_values)
             print(f"args string: {args_string}")
-            python_file_to_run = os.path.join(
-                "fm_eval", "runnables", "run_text2text.py"
-            )
+            python_file_to_run = "eval.py"
             command_to_run = (
                 f"{self._launch_cmd(args_strings)} {python_file_to_run} {args_string}"
             )
