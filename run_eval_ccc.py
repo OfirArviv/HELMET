@@ -5,10 +5,10 @@ from tqdm import tqdm
 from cluster_strategies import SingleRunArgs, CCCClusterStrategy
 
 instruct_model_names = [
-    "meta-llama/Llama-3.1-8B-Instruct",
+    # "meta-llama/Llama-3.1-8B-Instruct",
     # "Qwen/Qwen2.5-7B-Instruct",
     # "Qwen/Qwen2.5-7B-Instruct-1M",
-    # "google/gemma-3-4b-it",
+    "google/gemma-3-4b-it",
     # "google/gemma-3-12b-it",
     # "google/gemma-2-9b-it",
     # "tiiuae/Falcon3-7B-Instruct",
