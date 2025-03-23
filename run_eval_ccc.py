@@ -32,10 +32,10 @@ configs = glob.glob("configs/recall_short.yaml")
 args_list = []
 for config in configs:
     for model_name in base_model_names + instruct_model_names:
-        output_dir = (model_name
+        output_dir = f"output/{model_name
                       .replace("/", "_")
                       .replace(".", "_")
-                      .replace("-", "_"))
+                      .replace("-", "_")}"
         use_chat_template = "True" if model_name in instruct_model_names else "False"
         args = SingleRunArgs(model_name_or_path=model_name,
                              use_chat_template=use_chat_template,
