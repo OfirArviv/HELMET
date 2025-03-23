@@ -218,21 +218,11 @@ class CCCClusterStrategy(ClusterStrategy):
                 f"Unexpected CCC job status {status}!" f"\nJsubj output: {jbsub_output}"
             )
 
-        # This is reliant on run_text2text to keep the convention to save this file
-        results_save_path = os.path.join(output_dir, "all_results.json")
-        if os.path.isfile(results_save_path):
-            try:  # The run could still have stopped in the middle of the writing
-                with open(results_save_path, "r") as json_file:
-                    result = json.load(json_file)
-            except Exception as e:
-                return e
-        if len(result) == 0:
-            return Exception("Result file is empty, even thou job ended successfully.")
 
         print(
             f"ccc job {job_id} completed successfully and result file is present."
         )
-        return result
+        return {}
 
     def _launch_cmd(self, args_strings):
         is_accelerate = self.num_gpus > 1
@@ -309,8 +299,8 @@ class CCCClusterStrategy(ClusterStrategy):
                         )
                     )
                 else:
-                    inpt.output_queue.put(SingleRunResult(result, task_data.args))
+                    inpt.output_queue.put(SingleRunResult())
 
             else:
-                inpt.output_queue.put(SingleRunResult(result, task_data.args))
+                inpt.output_queue.put(SingleRunResult())
 
