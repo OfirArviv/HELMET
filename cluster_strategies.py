@@ -264,6 +264,7 @@ class CCCClusterStrategy(ClusterStrategy):
                 else None
             )
             logs_postfix = task_data.args.config.replace("/","_").replace("\\","_")
+            print(f"{task_data.args.output_dir}/output_{logs_postfix}.log")
             job_id, jbsub_output = submit_job(
                 command_to_run=command_to_run,
                 queue=self.queue,
