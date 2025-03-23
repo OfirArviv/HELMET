@@ -835,11 +835,6 @@ class HFModel(LLM):
         if "rope_theta" in kwargs and kwargs["rope_theta"] is not None:
             logger.info(f"Override rope theta to {kwargs['rope_theta']}")
             config.rope_theta = kwargs["rope_theta"]
-        import torch.distributed as dist
-        if not dist.is_initialized():
-            os.environ.setdefault("RANK", "0")
-            os.environ.setdefault("WORLD_SIZE", "1")
-            dist.init_process_group(backend="nccl", rank=0, world_size=1)
 
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
