@@ -263,6 +263,7 @@ class CCCClusterStrategy(ClusterStrategy):
                 if self.avoid_nodes
                 else None
             )
+            logs_postfix = task_data.args.config.replace("/","_").replace("\\","_")
             job_id, jbsub_output = submit_job(
                 command_to_run=command_to_run,
                 queue=self.queue,
@@ -274,8 +275,8 @@ class CCCClusterStrategy(ClusterStrategy):
                 project_name=self.project_name,
                 name=self.job_name,
                 wait=True,
-                out_file=f"{task_data.args.output_dir}/output.log",
-                err_file=f"{task_data.args.output_dir}/error.log",
+                out_file=f"{task_data.args.output_dir}/output_{logs_postfix}.log",
+                err_file=f"{task_data.args.output_dir}/error_{logs_postfix}.log",
                 x11=False,
             )
             if job_id is None:
