@@ -840,7 +840,7 @@ class HFModel(LLM):
             model_name,
             config=config,
             torch_dtype=kwargs.get("torch_dtype", torch.bfloat16),
-            device_map="auto",
+            # device_map="auto",
             trust_remote_code=True,
             tp_plan='auto',
             **model_kwargs
