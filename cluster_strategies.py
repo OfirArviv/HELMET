@@ -5,7 +5,7 @@ import random
 import subprocess
 import time
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from queue import Queue
 from typing import Dict, Generator, List, NamedTuple, Optional, Union
 
@@ -16,6 +16,9 @@ class SingleRunArgs:
     output_dir: str
     use_chat_template: str
     config: str
+
+    def get_args_dict(self) -> Dict[str, str]:
+        return self.__dict__
 
 @dataclass
 class SingleRunResult:
