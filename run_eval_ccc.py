@@ -46,7 +46,7 @@ for config in configs:
 cluster_strategy = CCCClusterStrategy(
     tasks_args_list=args_list,
     num_of_parallel_jobs=20,
-    _debug_disable_multi_processing=False,
+    _debug_disable_multi_processing=True,
     queue="nonstandard",
     mem="128g",
     gpu_type="a100_80gb",
