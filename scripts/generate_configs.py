@@ -223,30 +223,30 @@ def process_configs(config_name, datasets, input_lengths, **kwargs):
     with open(config_name, "w") as f:
         yaml.dump(out_config, f, sort_keys=False)
 
-def helmet_configs(input_lengths = ["128k"], fname_postfix = ""):
+def helmet_configs(input_lengths = ["128k"], fname_postfix = "", n_shot = None):
     synthetic = ["ruler_niah_mk_2", "ruler_niah_mk_3", "ruler_niah_mv", "json_kv"]
     # ruler actually doesn't support demos so it defaults to 0, json kv uses 2
     process_configs(
         f"configs/recall{fname_postfix}.yaml", synthetic, input_lengths, 
-        use_chat_template=False, max_test_samples=100, shots=2, stop_new_line=False
+        use_chat_template=False, max_test_samples=100, shots=2 if n_shot is None else n_shot, stop_new_line=False
     ) 
 
     rag = ['kilt_nq', 'kilt_triviaqa', 'kilt_hotpotqa', 'kilt_popqa']
     process_configs(
         f"configs/rag{fname_postfix}.yaml", rag, input_lengths,
-        use_chat_template=False, max_test_samples=100, shots=2, stop_new_line=True # could be false but set to true so it runs faster
+        use_chat_template=False, max_test_samples=100, shots=2 if n_shot is None else n_shot, stop_new_line=True # could be false but set to true so it runs faster
     )
 
     longqa = ['narrativeqa', 'infbench_qa_eng', 'infbench_choice_eng']
     process_configs(
         f"configs/longqa{fname_postfix}.yaml", longqa, input_lengths,
-        use_chat_template=True, max_test_samples=100, shots=2, stop_new_line=False
+        use_chat_template=True, max_test_samples=100, shots=2 if n_shot is None else n_shot, stop_new_line=False
     )
 
     summ = ['infbench_sum_eng', 'multi_lexsum']
     process_configs(
         f"configs/summ{fname_postfix}.yaml", summ, input_lengths,
-        use_chat_template=True, max_test_samples=100, shots=2, stop_new_line=False
+        use_chat_template=True, max_test_samples=100, shots=2 if n_shot is None else n_shot, stop_new_line=False
     )
 
     icl = ['icl_trec_coarse', 'icl_trec_fine', 'icl_banking77', 'icl_clinic150', 'icl_nlu']
@@ -258,13 +258,13 @@ def helmet_configs(input_lengths = ["128k"], fname_postfix = ""):
     rerank = ["msmarco_rerank_psg"]
     process_configs(
         f"configs/rerank{fname_postfix}.yaml", rerank, input_lengths,
-        use_chat_template=False, max_test_samples=100, shots=2, stop_new_line=True
+        use_chat_template=False, max_test_samples=100, shots=2 if n_shot is None else n_shot, stop_new_line=True
     )
 
     cite = ["alce_asqa", "alce_qampari"]
     process_configs(
         f"configs/cite{fname_postfix}.yaml", cite, input_lengths,
-        use_chat_template=True, max_test_samples=100, shots=2, stop_new_line=False
+        use_chat_template=True, max_test_samples=100, shots=2 if n_shot is None else n_shot, stop_new_line=False
     )
     
     nocite = ["alce_asqa_nocite"]
@@ -284,7 +284,7 @@ def separate_configs(input_lengths = ["128k"], fname_postfix = ""):
     for name in ['kilt_nq', 'kilt_triviaqa', 'kilt_hotpotqa', 'kilt_popqa']:
         process_configs(
             f"configs/rag/{name}{fname_postfix}.yaml", [name], input_lengths,
-            use_chat_template=False, max_test_samples=100, shots=2, stop_new_line=True
+            use_chat_template=False, max_test_samples=100, shots=2 , stop_new_line=True
         )
 
     for name in ['icl_trec_coarse', 'icl_trec_fine', 'icl_banking77', 'icl_clinic150', 'icl_nlu']:
@@ -313,6 +313,7 @@ def niah_configs():
 if __name__ == "__main__":
     helmet_configs()
     helmet_configs(input_lengths=["4k", "8k", "16k", "32k", "64k"], fname_postfix="_short")
+    helmet_configs(input_lengths=["4k", "8k", "16k", "32k", "64k"], fname_postfix="_short_zero_shot", n_shot=0)
     niah_configs()
     # separate_configs()
     # separate_configs(input_lengths=["4k","8k", "16k", "32k", "64k"], fname_postfix="_short")
