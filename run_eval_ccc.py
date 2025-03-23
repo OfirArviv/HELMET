@@ -29,7 +29,7 @@ base_model_names = [
 
 
 configs = glob.glob("configs/*_short*.yaml")
-# configs = glob.glob("configs/recall_short.yaml")
+configs = glob.glob("configs/recall_short.yaml")
 
 args_list = []
 for config in configs:
@@ -47,7 +47,7 @@ cluster_strategy = CCCClusterStrategy(
     num_of_parallel_jobs=20,
     _debug_disable_multi_processing=False,
     queue="nonstandard",
-    mem="128g",
+    mem="200g",
     gpu_type="a100_80gb",
     project_name="FM-Evaluation",
     job_name="Bamba",
