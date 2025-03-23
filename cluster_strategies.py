@@ -252,7 +252,7 @@ class CCCClusterStrategy(ClusterStrategy):
             print(f"args string: {args_string}")
             python_file_to_run = "eval.py"
             command_to_run = (
-                f"{self._launch_cmd(args_strings)} {python_file_to_run} {args_string}"
+                f"{self._launch_cmd(args_strings)} {python_file_to_run} {args_string} --use_vllm"
             )
 
             print(f"\nDispatching ccc job with command: {command_to_run}")
