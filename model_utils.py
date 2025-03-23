@@ -842,6 +842,7 @@ class HFModel(LLM):
             torch_dtype=kwargs.get("torch_dtype", torch.bfloat16),
             device_map="auto",
             trust_remote_code=True,
+            tp_plan=None,
             **model_kwargs
         )
         if kwargs.get("torch_compile", True):
