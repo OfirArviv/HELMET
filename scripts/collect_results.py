@@ -323,21 +323,24 @@ if __name__ == "__main__":
         args.output_dir = f"output/{model['model']}"
     
         for dataset in dataset_configs:
-            args.update(dataset)
-            args.update(model)
+            try:
+                args.update(dataset)
+                args.update(model)
 
-            metric = args.get_averaged_metric()
-            dsimple, mnames = args.get_metric_name()
+                metric = args.get_averaged_metric()
+                dsimple, mnames = args.get_metric_name()
 
-            if metric is None:
-                failed_paths.append(args.get_path())
-                continue
-                
-            for k, m in metric.items():
-                df.append({**asdict(args), **model,
-                    "metric name": k, "metric": m, 
-                    "dataset_simple": dsimple + " " + k, "test_data": f"{args.dataset}-{args.test_name}-{args.input_max_length}"
-                })
+                if metric is None:
+                    failed_paths.append(args.get_path())
+                    continue
+
+                for k, m in metric.items():
+                    df.append({**asdict(args), **model,
+                        "metric name": k, "metric": m,
+                        "dataset_simple": dsimple + " " + k, "test_data": f"{args.dataset}-{args.test_name}-{args.input_max_length}"
+                    })
+            except Exception as e:
+                print(e)
 
     all_df = pd.DataFrame(df)
 
