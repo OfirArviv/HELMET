@@ -166,7 +166,6 @@ cython_debug/
 #.idea/
 
 data
-output
 configs/_*
 slurm
 
