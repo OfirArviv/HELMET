@@ -338,6 +338,8 @@ if __name__ == "__main__":
                 })
 
     all_df = pd.DataFrame(df)
+
+    all_df.to_csv("all_df.csv")
     lf_df = all_df.pivot_table(index=["input_max_length", "model", ], columns="dataset_simple", values="metric", sort=False)
     lf_df = lf_df.reset_index()
 
