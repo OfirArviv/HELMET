@@ -1,6 +1,5 @@
 .*.swp
 .*.swo
-output/
 env/
 *_env/
 joblog/
