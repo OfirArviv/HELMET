@@ -288,6 +288,7 @@ if __name__ == "__main__":
     models_configs = []
     for model in instruct_model_names + base_model_names:
         config = {"model": model, "use_chat_template":  True if model in instruct_model_names else False, "training_length": -1}
+        models_configs.append(config)
 
     # set your configs here, only include the ones that you ran
     config_files = [
