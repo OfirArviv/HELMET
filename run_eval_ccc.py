@@ -94,7 +94,7 @@ for config in configs:
 
 cluster_strategy = CCCClusterStrategy(
     tasks_args_list=args_list,
-    num_of_parallel_jobs=20,
+    num_of_parallel_jobs=40,
     _debug_disable_multi_processing=False,
     queue="nonstandard",
     mem="200g",
