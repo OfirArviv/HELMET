@@ -813,10 +813,12 @@ class HFModel(LLM):
         from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
         model_kwargs = {}
         from pkg_resources import parse_version
+        """
         if parse_version(transformers.__version__) <= parse_version("4.34.1"):
             model_kwargs["use_flash_attention_2"] = True
         else:
             model_kwargs["attn_implementation"] = kwargs.get("attn_implementation", "flash_attention_2")
+        """
 
         FLASH_ATTN_NOT_SUPPORTED = ["recurrentgemma", "yarn"]
         if any([x in model_name.lower() for x in FLASH_ATTN_NOT_SUPPORTED]):
