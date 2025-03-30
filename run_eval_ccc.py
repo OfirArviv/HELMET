@@ -43,8 +43,8 @@ def does_exists(cmd_str: str):
         exists = os.path.exists(output_path)
         if exists is False:
             print(output_path)
-            return False
-    return False
+            return True
+    return True
 
 
 instruct_model_names = [
