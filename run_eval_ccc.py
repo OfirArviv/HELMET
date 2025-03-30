@@ -48,26 +48,26 @@ def does_exists(cmd_str: str):
 
 
 instruct_model_names = [
-    # "meta-llama/Llama-3.1-8B-Instruct",
-    # "Qwen/Qwen2.5-7B-Instruct",
-    # "Qwen/Qwen2.5-7B-Instruct-1M",
+    "meta-llama/Llama-3.1-8B-Instruct",
+    "Qwen/Qwen2.5-7B-Instruct",
+    "Qwen/Qwen2.5-7B-Instruct-1M",
     # "google/gemma-3-4b-it",
     # "google/gemma-3-12b-it",
     "google/gemma-2-9b-it",
-    # "tiiuae/Falcon3-7B-Instruct",
-    # "tiiuae/Falcon3-Mamba-7B-Instruct",
-    # "Zyphra/Zamba2-7B-Instruct-v2",
+    "tiiuae/Falcon3-7B-Instruct",
+    "tiiuae/Falcon3-Mamba-7B-Instruct",
+    "Zyphra/Zamba2-7B-Instruct-v2",
 ]
 
 base_model_names = [
-    # "meta-llama/Llama-3.1-8B",
-    # "Qwen/Qwen2.5-7B",
+    "meta-llama/Llama-3.1-8B",
+    "Qwen/Qwen2.5-7B",
     # "google/gemma-3-4b-pt",
     # "google/gemma-3-12b-pt",
     "google/gemma-2-9b",
-    # "tiiuae/Falcon3-7B-Base",
-    # "tiiuae/Falcon3-Mamba-7B-Base",
-    # "Zyphra/Zamba2-7B",
+    "tiiuae/Falcon3-7B-Base",
+    "tiiuae/Falcon3-Mamba-7B-Base",
+    "Zyphra/Zamba2-7B",
 ]
 
 
