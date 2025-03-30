@@ -91,6 +91,8 @@ for config in configs:
         if not does_exists(args_string):
             args_list.append(args)
 
+exit()
+
 cluster_strategy = CCCClusterStrategy(
     tasks_args_list=args_list,
     num_of_parallel_jobs=20,
