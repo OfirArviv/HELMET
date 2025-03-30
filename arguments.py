@@ -15,11 +15,11 @@ logger.setLevel(logging.INFO)
 
 def parse_arguments(arg_str: Optional[str] = None):
     parser = argparse.ArgumentParser(description="evaluation on downstream tasks")
-    parser.add_argument("--config", type=str, default=None, help="path to config file")
+    parser.add_argument("--config", type=str, help="path to config file", required=True)
     parser.add_argument("--tag", type=str, default="eval", help="tag to add to the output file")
 
     # model setting
-    parser.add_argument("--model_name_or_path", type=str, default=None)
+    parser.add_argument("--model_name_or_path", type=str, required=True)
     parser.add_argument("--use_vllm", action="store_true", help="whether to use vllm engine")
     parser.add_argument("--use_sglang", action="store_true", help="whether to use sglang engine")
 
@@ -27,7 +27,7 @@ def parse_arguments(arg_str: Optional[str] = None):
     parser.add_argument("--datasets", type=str, default=None, help="comma separated list of dataset names")
     parser.add_argument("--demo_files", type=str, default=None, help="comma separated list of demo files")
     parser.add_argument("--test_files", type=str, default=None, help="comma separated list of test files")
-    parser.add_argument("--output_dir", type=str, default=None, help="path to save the predictions")
+    parser.add_argument("--output_dir", type=str, help="path to save the predictions", required=True)
     parser.add_argument("--overwrite", action="store_true", help="whether to the saved file")
     parser.add_argument("--max_test_samples", type=int, default=None)
     parser.add_argument("--num_workers", type=int, default=4, help="number of workers for data loading")
@@ -53,7 +53,7 @@ def parse_arguments(arg_str: Optional[str] = None):
     parser.add_argument("--no_cuda", action="store_true", help="disable cuda")
     parser.add_argument("--no_bf16", action="store_true", help="disable bf16 and use fp32")
     parser.add_argument("--no_torch_compile", action="store_true", help="disable torchcompile")
-    parser.add_argument("--use_chat_template", type=ast.literal_eval, choices=[True, False], default=False, help="whether to use chat template")
+    parser.add_argument("--use_chat_template", type=ast.literal_eval, choices=[True, False], help="whether to use chat template", required=True)
     parser.add_argument("--rope_theta", type=int, default=None, help="override rope theta")
     parser.add_argument("--thinking", action="store_true", help="for reasoning models (e.g., Deepseek-r1), when this is set, we allow the model to generate an additional 32k tokens and exclude all texts between <think>*</think> from the output for evaluation")
 
@@ -70,7 +70,7 @@ def parse_arguments(arg_str: Optional[str] = None):
 
     config = yaml.safe_load(open(args.config)) if args.config is not None else {}
     parser.set_defaults(**config)
-    args = parser.parse_args()
+    args = parser.parse_args(arg_list)
 
     if args.output_dir is None:
         args.output_dir = f"output/{os.path.basename(args.model_name_or_path)}"
