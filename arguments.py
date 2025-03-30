@@ -70,7 +70,11 @@ def parse_arguments(arg_str: Optional[str] = None):
 
     config = yaml.safe_load(open(args.config)) if args.config is not None else {}
     parser.set_defaults(**config)
-    args = parser.parse_args(arg_list)
+    if arg_str is not None:
+        arg_list = shlex.split(arg_str)  # Safely splits the string like a shell would
+        args = parser.parse_args(arg_list)
+    else:
+        args = parser.parse_args()
 
     if args.output_dir is None:
         args.output_dir = f"output/{os.path.basename(args.model_name_or_path)}"
