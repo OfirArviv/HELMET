@@ -6,7 +6,6 @@ import random
 import json
 import time
 
-import nltk
 from tqdm import tqdm
 import numpy as np
 import torch
@@ -25,7 +24,6 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s
                     datefmt='%m/%d/%Y %H:%M:%S')
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-nltk.download('punkt_tab')
 
 
 def run_test(args, model, dataset, test_file, demo_file):
