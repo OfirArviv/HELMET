@@ -1,4 +1,7 @@
 import argparse
+import shlex
+from typing import Optional
+
 import yaml
 import ast
 import os
@@ -10,7 +13,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-def parse_arguments():
+def parse_arguments(arg_str: Optional[str] = None):
     parser = argparse.ArgumentParser(description="evaluation on downstream tasks")
     parser.add_argument("--config", type=str, default=None, help="path to config file")
     parser.add_argument("--tag", type=str, default="eval", help="tag to add to the output file")
@@ -58,7 +61,13 @@ def parse_arguments():
     parser.add_argument("--debug", action="store_true", help="for debugging")
     parser.add_argument("--count_tokens", action="store_true", help="instead of running generation, just count the number of tokens (only for HF models not API)")
 
-    args = parser.parse_args()
+    if arg_str is not None:
+        arg_list = shlex.split(arg_str)  # Safely splits the string like a shell would
+        args = parser.parse_args(arg_list)
+    else:
+        args = parser.parse_args()
+
+
     config = yaml.safe_load(open(args.config)) if args.config is not None else {}
     parser.set_defaults(**config)
     args = parser.parse_args()
