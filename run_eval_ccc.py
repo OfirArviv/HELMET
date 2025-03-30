@@ -42,7 +42,7 @@ def does_exists(cmd_str: str):
                                    f"{dataset}_{tag}_{test_name}_in{args.input_max_length}_size{args.max_test_samples}_shots{args.shots}_samp{args.do_sample}max{args.generation_max_length}min{args.generation_min_length}t{args.temperature}p{args.top_p}_chat{args.use_chat_template}_{args.seed}.json")
         exists = os.path.exists(output_path)
         if exists is False:
-            print(output_path)
+            # print(output_path)
             return False
     return True
 
