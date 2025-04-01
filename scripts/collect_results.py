@@ -302,59 +302,62 @@ if __name__ == "__main__":
         "configs/cite.yaml", "configs/cite_short.yaml", 
         "configs/ruler.yaml", "configs/ruler_short.yaml", 
     ]
+    config_dict = {
+        "zero_shot":  glob.glob("configs/*_short_zero_shot.yaml"),
+        "few_shot": glob.glob("configs/*_short.yaml")
+    }
+    for config_label, config_files in config_dict.items():
 
-    config_files = glob.glob("configs/*_short*.yaml")
+        dataset_configs = []
+        for file in config_files:
+            c = yaml.safe_load(open(file))
 
-    dataset_configs = []
-    for file in config_files:
-        c = yaml.safe_load(open(file))
-        
-        if isinstance(c["generation_max_length"], int):
-            c["generation_max_length"] = ",".join([str(c["generation_max_length"])] * len(c["datasets"].split(",")))
-        for d, t, l, g in zip(c['datasets'].split(','), c['test_files'].split(','), c['input_max_length'].split(','), c['generation_max_length'].split(',')):
-            dataset_configs.append({"dataset": d, "test_name": os.path.basename(os.path.splitext(t)[0]), "input_max_length": int(l), "generation_max_length": int(g), "max_test_samples": c['max_test_samples'], 'use_chat_template': c['use_chat_template'], 'shots': c['shots']})
-    print(dataset_configs)    
+            if isinstance(c["generation_max_length"], int):
+                c["generation_max_length"] = ",".join([str(c["generation_max_length"])] * len(c["datasets"].split(",")))
+            for d, t, l, g in zip(c['datasets'].split(','), c['test_files'].split(','), c['input_max_length'].split(','), c['generation_max_length'].split(',')):
+                dataset_configs.append({"dataset": d, "test_name": os.path.basename(os.path.splitext(t)[0]), "input_max_length": int(l), "generation_max_length": int(g), "max_test_samples": c['max_test_samples'], 'use_chat_template': c['use_chat_template'], 'shots': c['shots']})
+        print(dataset_configs)
 
-    failed_paths = []
-    df = []
-    for model in tqdm(models_configs):
-        args = arguments()
-        args.tag = "eval" # SET YOUR TAG HERE
-        args.output_dir = f"output/{model['model']}"
-    
-        for dataset in dataset_configs:
+        failed_paths = []
+        df = []
+        for model in tqdm(models_configs):
+            args = arguments()
+            args.tag = "eval" # SET YOUR TAG HERE
+            args.output_dir = f"output/{model['model']}"
+
+            for dataset in dataset_configs:
+                try:
+                    args.update(dataset)
+                    args.update(model)
+
+                    metric = args.get_averaged_metric()
+                    dsimple, mnames = args.get_metric_name()
+
+                    if metric is None:
+                        failed_paths.append(args.get_path())
+                        continue
+
+                    for k, m in metric.items():
+                        df.append({**asdict(args), **model,
+                            "metric name": k, "metric": m,
+                            "dataset_simple": dsimple + " " + k, "test_data": f"{args.dataset}-{args.test_name}-{args.input_max_length}"
+                        })
+                except Exception as e:
+                    print(e)
+
+        all_df = pd.DataFrame(df)
+
+        all_df.to_csv(f"all_df_{config_label}.csv")
+        lf_df = all_df.pivot_table(index=["input_max_length", "model", ], columns="dataset_simple", values="metric", sort=False)
+        lf_df = lf_df.reset_index()
+
+        for k, v in custom_avgs.items():
             try:
-                args.update(dataset)
-                args.update(model)
+                lf_df[k] = lf_df[v].mean(axis=1)
+            except Exception:
+                print(k)
 
-                metric = args.get_averaged_metric()
-                dsimple, mnames = args.get_metric_name()
+        print(lf_df.to_csv(f"lf_df_{config_label}.csv",index=False))
 
-                if metric is None:
-                    failed_paths.append(args.get_path())
-                    continue
-
-                for k, m in metric.items():
-                    df.append({**asdict(args), **model,
-                        "metric name": k, "metric": m,
-                        "dataset_simple": dsimple + " " + k, "test_data": f"{args.dataset}-{args.test_name}-{args.input_max_length}"
-                    })
-            except Exception as e:
-                print(e)
-
-    all_df = pd.DataFrame(df)
-
-    all_df.to_csv("all_df.csv")
-    lf_df = all_df.pivot_table(index=["input_max_length", "model", ], columns="dataset_simple", values="metric", sort=False)
-    lf_df = lf_df.reset_index()
-
-    for k, v in custom_avgs.items():
-        try:
-            lf_df[k] = lf_df[v].mean(axis=1)
-        except Exception:
-            print(k)
-
-    print(lf_df.to_csv("lf_df.csv",index=False))
-
-    print("Warning, failed to get the following paths, make sure that these are correct or the printed results will not be accurate:", failed_paths)
-    # import pdb; pdb.set_trace()
+        print("Warning, failed to get the following paths, make sure that these are correct or the printed results will not be accurate:", failed_paths)
+        # import pdb; pdb.set_trace()
