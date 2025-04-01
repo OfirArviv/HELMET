@@ -354,7 +354,7 @@ if __name__ == "__main__":
         except Exception:
             print(k)
 
-    print(lf_df.to_csv(index=False))
+    print(lf_df.to_csv("lf_df.csv",index=False))
 
     print("Warning, failed to get the following paths, make sure that these are correct or the printed results will not be accurate:", failed_paths)
     # import pdb; pdb.set_trace()
