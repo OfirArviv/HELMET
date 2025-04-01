@@ -61,6 +61,7 @@ instruct_model_names = [
 ]
 
 base_model_names = [
+    "/dccstor/eval-fms/models/instruct_models/tuluv3/2.1T_finemath/lr1e_6_finemath_wd_0_gbs_16-hf/",
     "meta-llama/Llama-3.1-8B",
     "Qwen/Qwen2.5-7B",
     # "google/gemma-3-4b-pt",
