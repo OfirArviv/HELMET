@@ -57,6 +57,7 @@ instruct_model_names = [
     "tiiuae/Falcon3-7B-Instruct",
     "tiiuae/Falcon3-Mamba-7B-Instruct",
     "Zyphra/Zamba2-7B-Instruct-v2",
+    "ibm-granite/granite-3.1-8b-instruct",
 ]
 
 base_model_names = [
@@ -68,6 +69,7 @@ base_model_names = [
     "tiiuae/Falcon3-7B-Base",
     "tiiuae/Falcon3-Mamba-7B-Base",
     "Zyphra/Zamba2-7B",
+    "ibm-granite/granite-3.1-8b-base",
 ]
 
 
