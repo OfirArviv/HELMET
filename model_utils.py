@@ -819,7 +819,7 @@ class HFModel(LLM):
         else:
             model_kwargs["attn_implementation"] = kwargs.get("attn_implementation", "flash_attention_2")
         """
-        model_kwargs["attn_implementation"] = kwargs.get("attn_implementation", "flash_attention_2")
+        model_kwargs["attn_implementation"] = kwargs.get("attn_implementation", "flash_attention")
 
         FLASH_ATTN_NOT_SUPPORTED = ["recurrentgemma", "yarn"]
         if any([x in model_name.lower() for x in FLASH_ATTN_NOT_SUPPORTED]):
